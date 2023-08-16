@@ -89,7 +89,7 @@ jobs:
           msbuild Core\FusionHelper\FusionHelper.csproj -t:restore,build -property:RestorePackagesConfig=true -property:Configuration=Release-Win -property:Platform=x64
           msbuild Core\FusionHelper\FusionHelper.csproj -t:restore,build -property:RestorePackagesConfig=true -property:Configuration=Release-Win -property:Platform=ARM64
           msbuild Core\FusionHelper\FusionHelper.csproj -t:restore,build -property:RestorePackagesConfig=true -property:Configuration=Release-Linux -property:Platform=x64
-          copy .\bin\Release\LabFusion.dll .\
+          copy D:\a\BONELAB-Fusion\BONELAB-Fusion\bin\Release\LabFusion.dll .\
           # Not sure why the arm linux isn't working
           #msbuild Core\FusionHelper\FusionHelper.csproj -t:restore,build -property:RestorePackagesConfig=true -property:Configuration=Release-Linux -property:Platform=ARM64
           Compress-Archive -Path D:\a\BONELAB-Fusion\BONELAB-Fusion\Core\FusionHelper\bin\x64\Release-Win\net6.0-windows\win-x64\* -Destination FusionHelper_Win-x64.zip
