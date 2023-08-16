@@ -1,0 +1,122 @@
+name: Sync, Build, and Release
+
+on:
+  schedule:
+    - cron: '*/30 * * * *' # every 30 minutes
+  workflow_dispatch: # on button click
+#on:
+#  push:
+#    branches: [ "main" ]
+
+jobs:
+  job1:
+    runs-on: ubuntu-latest
+    outputs:
+      output1: ${{ steps.step1.outputs.test }}
+    steps:
+      - name: sync fork
+        uses: tgymnich/fork-sync@v1.8
+        with:
+          base: main
+          head: main
+        if: ${{ github.event_name == 'schedule' }}
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: 'Get Previous tag'
+        id: previoustag
+        uses: "WyriHaximus/github-action-get-previous-tag@v1"
+        env:
+          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+      - name: 'Get next minor version'
+        id: semvers
+        uses: "WyriHaximus/github-action-next-semvers@v1"
+        with:
+          version: ${{ steps.previoustag.outputs.tag }}
+      - id: step1
+        run: echo "test=${{ steps.semvers.outputs.major }}" >> "$GITHUB_OUTPUT"
+
+  buildmacos:
+    runs-on: macos-13
+    needs: job1
+    steps:
+    - uses: actions/checkout@v3
+    - uses: maxim-lobanov/setup-xcode@v1
+      with:
+        xcode-version: '14.3'
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 6.0.x
+    - name: Build Macos FusionHelper
+      run: |
+          cd Core/FusionHelper
+          dotnet workload install macos
+          sudo ./build-mac.sh Release x64
+          sudo ./build-mac.sh Release arm64
+    - name: compress files
+      run: |
+          ditto -c -k --sequesterRsrc --keepParent Core/FusionHelper/bin/Release-Mac/net6.0-macos11.0/osx-x64 FusionHelper_Mac-x64.zip
+          ditto -c -k --sequesterRsrc --keepParent Core/FusionHelper/bin/Release-Mac/net6.0-macos11.0/osx-arm64 FusionHelper_Mac-arm64.zip
+    - uses: actions/upload-artifact@v3
+      with:
+        name: Mac-x64
+        path: FusionHelper_Mac-x64.zip
+    - uses: actions/upload-artifact@v3
+      with:
+        name: Mac-arm64
+        path: FusionHelper_Mac-arm64.zip
+
+       
+  buildandrelease:
+    needs: [job1, buildmacos]
+    runs-on: windows-latest
+
+    steps:
+    - name: Access Variable
+      run: echo "${{needs.job1.outputs.output1}}"
+
+    - uses: actions/checkout@v3
+  
+    - name: Setup MSBuild
+      uses: microsoft/setup-msbuild@v1.3.1
+
+    - name: Build and zip
+      run: |
+          msbuild LabFusion.csproj -property:Configuration=Release
+          msbuild UpdaterApp\UpdaterApp.csproj -property:Configuration=Release
+          msbuild LabFusionUpdater\LabFusionUpdater.csproj -property:Configuration=Release
+          msbuild Core\FusionHelper\FusionHelper.csproj -t:restore,build -property:RestorePackagesConfig=true -property:Configuration=Release-Win -property:Platform=x64
+          msbuild Core\FusionHelper\FusionHelper.csproj -t:restore,build -property:RestorePackagesConfig=true -property:Configuration=Release-Win -property:Platform=ARM64
+          msbuild Core\FusionHelper\FusionHelper.csproj -t:restore,build -property:RestorePackagesConfig=true -property:Configuration=Release-Linux -property:Platform=x64
+          copy .\bin\Release\LabFusion.dll .\
+          # Not sure why the arm linux isn't working
+          #msbuild Core\FusionHelper\FusionHelper.csproj -t:restore,build -property:RestorePackagesConfig=true -property:Configuration=Release-Linux -property:Platform=ARM64
+          Compress-Archive -Path D:\a\BONELAB-Fusion\BONELAB-Fusion\Core\FusionHelper\bin\x64\Release-Win\net6.0-windows\win-x64\* -Destination FusionHelper_Win-x64.zip
+          Compress-Archive -Path D:\a\BONELAB-Fusion\BONELAB-Fusion\Core\FusionHelper\bin\ARM64\Release-Win\net6.0-windows\* -Destination FusionHelper_Win-arm64.zip
+          Compress-Archive -Path D:\a\BONELAB-Fusion\BONELAB-Fusion\Core\FusionHelper\bin\x64\Release-Linux\net6.0\linux-x64\* -Destination FusionHelper_Linux-x64.zip
+          # Not sure why the arm linux isn't working
+          #Compress-Archive -Path D:\a\BONELAB-Fusion\BONELAB-Fusion\Core\FusionHelper\bin\x64\ARM64\Release-Linux\net6.0\* -Destination FusionHelper_Linux-arm64.zip
+    - name: Download Mac-x64 Build
+      uses: actions/download-artifact@v3
+      with:
+        name: Mac-x64
+    - name: Download Mac-arm64 Build
+      uses: actions/download-artifact@v3
+      with:
+        name: Mac-arm64
+    - name: Display structure of downloaded files
+      run: ls -R
+    - name: Release
+      uses: softprops/action-gh-release@v1
+      with:
+         tag_name: ${{needs.job1.outputs.output1}}
+         files: |
+             LabFusion.dll
+             LabFusionUpdater.dll
+             FusionHelper_Win-x64.zip
+             FusionHelper_Win-arm64.zip
+             FusionHelper_Linux-x64.zip
+             FusionHelper_Linux-arm64.zip
+             FusionHelper_Mac-x64.zip
+             FusionHelper_Mac-arm64.zip
