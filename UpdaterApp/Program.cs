@@ -11,7 +11,7 @@ using System.Web.Script.Serialization;
 namespace UpdaterApp
 {
     internal class Program {
-        private static readonly string _releasesApi = "https://api.github.com/repos/Lakatrazz/BONELAB-Fusion/releases";
+        private static readonly string _releasesApi = "https://api.github.com/repos/rsquared256/BONELAB-Fusion/releases";
         
         public const string ModName = "LabFusion";
         public const string PluginName = "LabFusionUpdater";

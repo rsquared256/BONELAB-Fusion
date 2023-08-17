@@ -26,6 +26,8 @@ jobs:
       - name: 'Get Previous tag'
         id: previoustag
         uses: "WyriHaximus/github-action-get-previous-tag@v1"
+        with:
+          fallback: 0.0.1
         env:
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
       - name: 'Get next minor version'
@@ -119,6 +121,6 @@ jobs:
              FusionHelper_Win-x64.zip
              FusionHelper_Win-arm64.zip
              FusionHelper_Linux-x64.zip
-             FusionHelper_Linux-arm64.zip
+             #FusionHelper_Linux-arm64.zip
              FusionHelper_Mac-x64.zip
              FusionHelper_Mac-arm64.zip
