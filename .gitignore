@@ -5,7 +5,7 @@
 
 # Dependencies
 
-**/[Mm]anaged/
+#**/[Mm]anaged/
 **/[Bb]in/
 
 # User-specific files
