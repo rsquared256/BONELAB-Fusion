@@ -84,19 +84,21 @@ jobs:
     - name: Build and zip
       run: |
           msbuild LabFusion.csproj -property:Configuration=Release
+          copy .\bin\Release\LabFusion.dll .\
           msbuild UpdaterApp\UpdaterApp.csproj -property:Configuration=Release
+          copy .\UpdaterApp\bin\Release\updater.exe .\LabFusionUpdater\resources
           msbuild LabFusionUpdater\LabFusionUpdater.csproj -property:Configuration=Release
+          copy .\LabFusionUpdater\bin\Release\LabFusionUpdater.dll .\
           msbuild Core\FusionHelper\FusionHelper.csproj -t:restore,build -property:RestorePackagesConfig=true -property:Configuration=Release-Win -property:Platform=x64
           msbuild Core\FusionHelper\FusionHelper.csproj -t:restore,build -property:RestorePackagesConfig=true -property:Configuration=Release-Win -property:Platform=ARM64
           msbuild Core\FusionHelper\FusionHelper.csproj -t:restore,build -property:RestorePackagesConfig=true -property:Configuration=Release-Linux -property:Platform=x64
-          copy D:\a\BONELAB-Fusion\BONELAB-Fusion\bin\Release\LabFusion.dll .\
           # Not sure why the arm linux isn't working
           #msbuild Core\FusionHelper\FusionHelper.csproj -t:restore,build -property:RestorePackagesConfig=true -property:Configuration=Release-Linux -property:Platform=ARM64
-          Compress-Archive -Path D:\a\BONELAB-Fusion\BONELAB-Fusion\Core\FusionHelper\bin\x64\Release-Win\net6.0-windows\win-x64\* -Destination FusionHelper_Win-x64.zip
-          Compress-Archive -Path D:\a\BONELAB-Fusion\BONELAB-Fusion\Core\FusionHelper\bin\ARM64\Release-Win\net6.0-windows\* -Destination FusionHelper_Win-arm64.zip
-          Compress-Archive -Path D:\a\BONELAB-Fusion\BONELAB-Fusion\Core\FusionHelper\bin\x64\Release-Linux\net6.0\linux-x64\* -Destination FusionHelper_Linux-x64.zip
+          Compress-Archive -Path .\Core\FusionHelper\bin\x64\Release-Win\net6.0-windows\win-x64\* -Destination FusionHelper_Win-x64.zip
+          Compress-Archive -Path .\Core\FusionHelper\bin\ARM64\Release-Win\net6.0-windows\* -Destination FusionHelper_Win-arm64.zip
+          Compress-Archive -Path .\Core\FusionHelper\bin\x64\Release-Linux\net6.0\linux-x64\* -Destination FusionHelper_Linux-x64.zip
           # Not sure why the arm linux isn't working
-          #Compress-Archive -Path D:\a\BONELAB-Fusion\BONELAB-Fusion\Core\FusionHelper\bin\x64\ARM64\Release-Linux\net6.0\* -Destination FusionHelper_Linux-arm64.zip
+          #Compress-Archive -Path .\Core\FusionHelper\bin\x64\ARM64\Release-Linux\net6.0\* -Destination FusionHelper_Linux-arm64.zip
     - name: Download Mac-x64 Build
       uses: actions/download-artifact@v3
       with:
