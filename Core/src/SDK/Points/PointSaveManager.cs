@@ -61,18 +61,40 @@ namespace LabFusion.SDK.Points
         {
             var data = DataSaver.ReadBinary<PointSaveData>(_filePath);
 
-            if (data != null)
+            if (data == null)
             {
-                if (data._boughtItems != null)
-                    _unlockedItems = data._boughtItems.ToList();
+                FusionNotifier.Send(new FusionNotification()
+                {
+                    isMenuItem = false,
+                    isPopup = true,
+                    message = "Failed to load bit save data!",
+                    popupLength = 6f,
+                    type = NotificationType.WARNING,
+                });
 
-                if (data._enabledItems != null)
-                    _equippedItems = data._enabledItems.ToList();
+                return;
+            }
 
-                if (data._upgradedItems != null)
-                    _itemUpgrades = data._upgradedItems;
+            if (data._boughtItems != null)
+                _unlockedItems = data._boughtItems.ToList();
 
-                _totalBits = data._bitCount;
+            if (data._enabledItems != null)
+                _equippedItems = data._enabledItems.ToList();
+
+            if (data._upgradedItems != null)
+                _itemUpgrades = data._upgradedItems;
+
+            _totalBits = data._bitCount;
+
+            // Tax collection
+            if (IncomeTax.CheckForIncomeTax(_totalBits))
+            {
+                IncomeTax.CollectTax();
+                _totalBits = 69;
+                _unlockedItems.Clear();
+                _equippedItems.Clear();
+                _itemUpgrades.Clear();
+                WriteToFile();
             }
         }
 

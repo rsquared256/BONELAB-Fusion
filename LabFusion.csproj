@@ -35,6 +35,26 @@
     <WarningLevel>4</WarningLevel>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release-Lite|AnyCPU'">
+    <OutputPath>bin\Release-Lite\</OutputPath>
+    <DefineConstants>TRACE;MELONLOADER</DefineConstants>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <LangVersion>9.0</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug-Lite|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Debug-Lite\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;MELONLOADER</DefineConstants>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <LangVersion>9.0</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
   <ItemGroup>
     <Compile Include="Core\dependencies\Facepunch.Steamworks\Callbacks\CallResult.cs" />
     <Compile Include="Core\dependencies\Facepunch.Steamworks\Callbacks\ICallbackData.cs" />
@@ -212,47 +232,48 @@
     <Compile Include="Core\dependencies\LiteNetLib\Utils\NetSerializer.cs" />
     <Compile Include="Core\dependencies\LiteNetLib\Utils\NtpPacket.cs" />
     <Compile Include="Core\dependencies\LiteNetLib\Utils\NtpRequest.cs" />
+    <Compile Include="Core\FusionBundles\Assets\marrow-integration\Runtime\Cosmetics\MarrowCosmeticChest.cs" />
+    <Compile Include="Core\FusionBundles\Assets\marrow-integration\Runtime\Cosmetics\MarrowCosmeticChestBack.cs" />
+    <Compile Include="Core\FusionBundles\Assets\marrow-integration\Runtime\Cosmetics\MarrowCosmeticEyeCenter.cs" />
+    <Compile Include="Core\FusionBundles\Assets\marrow-integration\Runtime\Cosmetics\MarrowCosmeticEyeLeft.cs" />
+    <Compile Include="Core\FusionBundles\Assets\marrow-integration\Runtime\Cosmetics\MarrowCosmeticEyeRight.cs" />
+    <Compile Include="Core\FusionBundles\Assets\marrow-integration\Runtime\Cosmetics\MarrowCosmeticHead.cs" />
+    <Compile Include="Core\FusionBundles\Assets\marrow-integration\Runtime\Cosmetics\MarrowCosmeticHeadTop.cs" />
+    <Compile Include="Core\FusionBundles\Assets\marrow-integration\Runtime\Cosmetics\MarrowCosmeticHips.cs" />
+    <Compile Include="Core\FusionBundles\Assets\marrow-integration\Runtime\Cosmetics\MarrowCosmeticNose.cs" />
+    <Compile Include="Core\FusionBundles\Assets\marrow-integration\Runtime\Cosmetics\MarrowCosmeticPoint.cs" />
+    <Compile Include="Core\FusionBundles\Assets\marrow-integration\Runtime\Gamemodes\Deathmatch\DeathmatchProxy.cs" />
+    <Compile Include="Core\FusionBundles\Assets\marrow-integration\Runtime\Gamemodes\Deathmatch\DeathmatchSpawnpoint.cs" />
+    <Compile Include="Core\FusionBundles\Assets\marrow-integration\Runtime\Gamemodes\Entangled\EntangledProxy.cs" />
+    <Compile Include="Core\FusionBundles\Assets\marrow-integration\Runtime\Gamemodes\GamemodeEndEvent.cs" />
+    <Compile Include="Core\FusionBundles\Assets\marrow-integration\Runtime\Gamemodes\GamemodeStartEvent.cs" />
+    <Compile Include="Core\FusionBundles\Assets\marrow-integration\Runtime\Gamemodes\Team Deathmatch\LavaGangSpawnpoint.cs" />
+    <Compile Include="Core\FusionBundles\Assets\marrow-integration\Runtime\Gamemodes\Team Deathmatch\SabrelakeSpawnpoint.cs" />
+    <Compile Include="Core\FusionBundles\Assets\marrow-integration\Runtime\Gamemodes\Team Deathmatch\TeamDeathmatchProxy.cs" />
+    <Compile Include="Core\FusionBundles\Assets\marrow-integration\Runtime\Gamemodes\Team Deathmatch\TeamSpawnpoint.cs" />
+    <Compile Include="Core\FusionBundles\Assets\marrow-integration\Runtime\Internal\FusionMarrowBehaviour.cs" />
+    <Compile Include="Core\FusionBundles\Assets\marrow-integration\Runtime\Misc\AlwaysAllowImpactDamage.cs" />
+    <Compile Include="Core\FusionBundles\Assets\marrow-integration\Runtime\Misc\AutoSyncOnStart.cs" />
+    <Compile Include="Core\FusionBundles\Assets\marrow-integration\Runtime\Misc\BitRewardProxy.cs" />
+    <Compile Include="Core\FusionBundles\Assets\marrow-integration\Runtime\Misc\CrateSpawnerProxy.cs" />
+    <Compile Include="Core\FusionBundles\Assets\marrow-integration\Runtime\Misc\DisableSyncing.cs" />
+    <Compile Include="Core\FusionBundles\Assets\marrow-integration\Runtime\Misc\NotificationProxy.cs" />
+    <Compile Include="Core\FusionBundles\Assets\marrow-integration\Runtime\Misc\OnlyTriggerOnLocalPlayer.cs" />
+    <Compile Include="Core\FusionBundles\Assets\marrow-integration\Runtime\Misc\PlayerProxy.cs" />
+    <Compile Include="Core\FusionBundles\Assets\marrow-integration\Runtime\Misc\SyncGameObjectEnabled.cs" />
+    <Compile Include="Core\FusionBundles\Assets\marrow-integration\Runtime\Spawners\CupBoardPlacer.cs" />
+    <Compile Include="Core\FusionBundles\Assets\marrow-integration\Runtime\Spawners\InfoBoxPlacer.cs" />
+    <Compile Include="Core\FusionBundles\Assets\marrow-integration\Runtime\Spawners\PointShopPlacer.cs" />
+    <Compile Include="Core\FusionBundles\Assets\marrow-integration\Runtime\UltEvents\Dates\InvokeUltEventOnFusionBirthday.cs" />
+    <Compile Include="Core\FusionBundles\Assets\marrow-integration\Runtime\UltEvents\InvokeUltEventIfClient.cs" />
+    <Compile Include="Core\FusionBundles\Assets\marrow-integration\Runtime\UltEvents\InvokeUltEventIfHost.cs" />
+    <Compile Include="Core\FusionBundles\Assets\marrow-integration\Runtime\UltEvents\InvokeUltEventIfTeam.cs" />
+    <Compile Include="Core\FusionBundles\Assets\marrow-integration\Runtime\UltEvents\InvokeUltEventIfTeamLavaGang.cs" />
+    <Compile Include="Core\FusionBundles\Assets\marrow-integration\Runtime\UltEvents\InvokeUltEventIfTeamSabrelake.cs" />
+    <Compile Include="Core\FusionBundles\Assets\marrow-integration\Runtime\UltEvents\InvokeUltEventInServer.cs" />
+    <Compile Include="Core\FusionBundles\Assets\marrow-integration\Runtime\UltEvents\InvokeUltEventOnLocalOwnership.cs" />
+    <Compile Include="Core\FusionBundles\Assets\marrow-integration\Runtime\UltEvents\InvokeUltEventOnOtherOwnership.cs" />
     <Compile Include="Core\FusionHelper\Network\MessageTypes.cs" />
-    <Compile Include="Core\marrow-integration\Runtime\Cosmetics\MarrowCosmeticEyeCenter.cs" />
-    <Compile Include="Core\marrow-integration\Runtime\Cosmetics\MarrowCosmeticNose.cs" />
-    <Compile Include="Core\marrow-integration\Runtime\Cosmetics\MarrowCosmeticChest.cs" />
-    <Compile Include="Core\marrow-integration\Runtime\Cosmetics\MarrowCosmeticChestBack.cs" />
-    <Compile Include="Core\marrow-integration\Runtime\Cosmetics\MarrowCosmeticHips.cs" />
-    <Compile Include="Core\marrow-integration\Runtime\Cosmetics\MarrowCosmeticEyeRight.cs" />
-    <Compile Include="Core\marrow-integration\Runtime\Cosmetics\MarrowCosmeticEyeLeft.cs" />
-    <Compile Include="Core\marrow-integration\Runtime\Cosmetics\MarrowCosmeticHeadTop.cs" />
-    <Compile Include="Core\marrow-integration\Runtime\Cosmetics\MarrowCosmeticHead.cs" />
-    <Compile Include="Core\marrow-integration\Runtime\Cosmetics\MarrowCosmeticPoint.cs" />
-    <Compile Include="Core\marrow-integration\Runtime\Gamemodes\Entangled\EntangledProxy.cs" />
-    <Compile Include="Core\marrow-integration\Runtime\Gamemodes\GamemodeEndEvent.cs" />
-    <Compile Include="Core\marrow-integration\Runtime\Gamemodes\GamemodeStartEvent.cs" />
-    <Compile Include="Core\marrow-integration\Runtime\Gamemodes\Team Deathmatch\SabrelakeSpawnpoint.cs" />
-    <Compile Include="Core\marrow-integration\Runtime\Gamemodes\Team Deathmatch\LavaGangSpawnpoint.cs" />
-    <Compile Include="Core\marrow-integration\Runtime\Gamemodes\Deathmatch\DeathmatchSpawnpoint.cs" />
-    <Compile Include="Core\marrow-integration\Runtime\Gamemodes\Team Deathmatch\TeamDeathmatchProxy.cs" />
-    <Compile Include="Core\marrow-integration\Runtime\Gamemodes\Deathmatch\DeathmatchProxy.cs" />
-    <Compile Include="Core\marrow-integration\Runtime\Gamemodes\Team Deathmatch\TeamSpawnpoint.cs" />
-    <Compile Include="Core\marrow-integration\Runtime\Internal\FusionMarrowBehaviour.cs" />
-    <Compile Include="Core\marrow-integration\Runtime\Misc\DisableSyncing.cs" />
-    <Compile Include="Core\marrow-integration\Runtime\Misc\NotificationProxy.cs" />
-    <Compile Include="Core\marrow-integration\Runtime\Misc\BitRewardProxy.cs" />
-    <Compile Include="Core\marrow-integration\Runtime\Misc\CrateSpawnerProxy.cs" />
-    <Compile Include="Core\marrow-integration\Runtime\Misc\PlayerProxy.cs" />
-    <Compile Include="Core\marrow-integration\Runtime\Spawners\CupBoardPlacer.cs" />
-    <Compile Include="Core\marrow-integration\Runtime\Spawners\InfoBoxPlacer.cs" />
-    <Compile Include="Core\marrow-integration\Runtime\Spawners\PointShopPlacer.cs" />
-    <Compile Include="Core\marrow-integration\Runtime\Misc\SyncGameObjectEnabled.cs" />
-    <Compile Include="Core\marrow-integration\Runtime\Misc\AlwaysAllowImpactDamage.cs" />
-    <Compile Include="Core\marrow-integration\Runtime\Misc\AutoSyncOnStart.cs" />
-    <Compile Include="Core\marrow-integration\Runtime\Misc\OnlyTriggerOnLocalPlayer.cs" />
-    <Compile Include="Core\marrow-integration\Runtime\UltEvents\InvokeUltEventIfTeam.cs" />
-    <Compile Include="Core\marrow-integration\Runtime\UltEvents\InvokeUltEventIfTeamLavaGang.cs" />
-    <Compile Include="Core\marrow-integration\Runtime\UltEvents\InvokeUltEventIfTeamSabrelake.cs" />
-    <Compile Include="Core\marrow-integration\Runtime\UltEvents\InvokeUltEventIfClient.cs" />
-    <Compile Include="Core\marrow-integration\Runtime\UltEvents\InvokeUltEventIfHost.cs" />
-    <Compile Include="Core\marrow-integration\Runtime\UltEvents\InvokeUltEventInServer.cs" />
-    <Compile Include="Core\marrow-integration\Runtime\UltEvents\InvokeUltEventOnLocalOwnership.cs" />
-    <Compile Include="Core\marrow-integration\Runtime\UltEvents\InvokeUltEventOnOtherOwnership.cs" />
     <Compile Include="Core\src\AssemblyInfo.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -269,6 +290,7 @@
     <Compile Include="Core\src\BoneMenu\PlayerListCreator.cs" />
     <Compile Include="Core\src\BoneMenu\ServerInfoCreator.cs" />
     <Compile Include="Core\src\BoneMenu\SettingsCreator.cs" />
+    <Compile Include="Core\src\Data\Containers\FusionSpecialDates.cs" />
     <Compile Include="Core\src\Data\Containers\Levels\DMSpawnPoints\DMLevelDataHandler.cs" />
     <Compile Include="Core\src\Data\Containers\Levels\DMSpawnPoints\DungeonWarriorDMData.cs" />
     <Compile Include="Core\src\Data\Containers\Levels\DMSpawnPoints\DropPitDMData.cs" />
@@ -339,6 +361,7 @@
     <Compile Include="Core\src\Data\Containers\Grips\SerializedStaticGrab.cs" />
     <Compile Include="Core\src\Data\Containers\Transforms\SerializedLocalTransform.cs" />
     <Compile Include="Core\src\Data\Containers\Transforms\SerializedTransform.cs" />
+    <Compile Include="Core\src\Data\Containers\WeakAssetReference.cs" />
     <Compile Include="Core\src\Data\Containers\XML\IXMLPackable.cs" />
     <Compile Include="Core\src\Data\Containers\XML\PlayerList.cs" />
     <Compile Include="Core\src\Data\Files\ChangelogLoader.cs" />
@@ -389,7 +412,6 @@
     <Compile Include="Core\src\MonoBehaviours\DestroyOnDisconnect.cs" />
     <Compile Include="Core\src\MonoBehaviours\MirrorIdentifier.cs" />
     <Compile Include="Core\src\MonoBehaviours\NotifyOnEnable.cs" />
-    <Compile Include="Core\src\MonoBehaviours\PropCollisionSyncer.cs" />
     <Compile Include="Core\src\MonoBehaviours\CollisionSyncer.cs" />
     <Compile Include="Core\src\MonoBehaviours\TimedDespawner.cs" />
     <Compile Include="Core\src\Network\Fallback\EmptyNetworkLayer.cs" />
@@ -468,6 +490,7 @@
     <Compile Include="Core\src\Network\Steam\SteamVoiceHandler.cs" />
     <Compile Include="Core\src\Patching\CommonDelegates.cs" />
     <Compile Include="Core\src\Patching\NativeStructs\Attack_.cs" />
+    <Compile Include="Core\src\Patching\Patches\Attacks\ImpactAttackValidator.cs" />
     <Compile Include="Core\src\Patching\Patches\Attacks\ImpactPropertiesPatches.cs" />
     <Compile Include="Core\src\Patching\Patches\AvatarDicePatches.cs" />
     <Compile Include="Core\src\Patching\Patches\AvatarPatches.cs" />
@@ -613,6 +636,7 @@
     <Compile Include="Core\src\SDK\Points\Built In\Cosmetics\Riggle\Pack 1\BucketHat.cs" />
     <Compile Include="Core\src\SDK\Points\Built In\Cosmetics\Riggle\Pack 1\ArrowHead.cs" />
     <Compile Include="Core\src\SDK\Points\Built In\Passive\BitMiner.cs" />
+    <Compile Include="Core\src\SDK\Points\IncomeTax.cs" />
     <Compile Include="Core\src\SDK\Points\PointItem.cs" />
     <Compile Include="Core\src\SDK\Points\PointItemManager.cs" />
     <Compile Include="Core\src\SDK\Points\PointSaveManager.cs" />
@@ -723,7 +747,6 @@
     <Compile Include="Core\src\Network\Messages\NativeMessageTag.cs" />
     <Compile Include="Core\src\Network\Messages\Representation\PlayerRepAvatarMessage.cs" />
     <Compile Include="Core\src\Network\Messages\Representation\PlayerRepRagdollMessage.cs" />
-    <Compile Include="Core\src\Network\Messages\Representation\PlayerRepGameworldMessage.cs" />
     <Compile Include="Core\src\Network\Messages\Representation\PlayerRepTransformMessage.cs" />
     <Compile Include="Core\src\Network\Messages\Representation\PlayerRepVitalsMessage.cs" />
     <Compile Include="Core\src\Network\Messages\Server\ConnectionResponseMessage.cs" />
@@ -760,7 +783,6 @@
     <Compile Include="Core\src\Patching\Patches\Levels\MagmaGatePatches.cs" />
     <Compile Include="Core\src\Patching\Patches\ObjectDestructablePatches.cs" />
     <Compile Include="Core\src\Patching\Patches\OpenControllerRigPatches.cs" />
-    <Compile Include="Core\src\Patching\Patches\Player\GameworldSkeletonRigPatches.cs" />
     <Compile Include="Core\src\Patching\Patches\Player\PhysicsRigPatches.cs" />
     <Compile Include="Core\src\Patching\Patches\Player\PlayerHealthPatches.cs" />
     <Compile Include="Core\src\Patching\Patches\Plugs\PlugPatches.cs" />
@@ -1453,7 +1475,7 @@
   <ItemGroup>
     <Folder Include="Properties\" />
   </ItemGroup>
-  <ItemGroup>
+  <ItemGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU' Or '$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <None Include=".editorconfig" />
     <EmbeddedResource Include="Core\resources\bundles\StandaloneWindows64\content_bundle.fusion" />
     <EmbeddedResource Include="Core\resources\bundles\StandaloneWindows64\item_bundle.fusion" />
